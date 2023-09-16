@@ -1,6 +1,5 @@
 String workerDir = 'inference-api'
 String credentialsId = 'deploy-key-github'
-String registryUrl = 'https://registry.easyrice.tech'
 def remote = [:]
 
 pipeline {
@@ -8,9 +7,13 @@ pipeline {
     //  parameters {
     // }
     stages {
-        stage('Get env') {
+        stage('Update Source Code') {
             steps {
-                sh 'echo "hello world"'
+                script {
+                    sshaent(['grit-ssh-uat']) {
+                        sh "ssh  -o StrictHostKeyChecking=no   grit@43.229.132.128 git -C /home/grit/cryproplat/portal-service pull;"
+                }       
+            }
             }
         }
     //     stage('Prepare Resource To Host') {
