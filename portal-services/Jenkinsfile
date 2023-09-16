@@ -5,8 +5,8 @@ def remote = [:]
 
 pipeline {
     agent any
-     parameters {
-    }
+    //  parameters {
+    // }
     stages {
         stage('Get env') {
             steps {
