@@ -11,7 +11,7 @@ pipeline {
             steps {
                 script {
                     sshagent(['grit-ssh-uat']) {
-                        sh "ssh  -o StrictHostKeyChecking=no   grit@43.229.132.128 git -C /home/grit/cryproplat/portal-service pull;"
+                        sh "ssh  -o StrictHostKeyChecking=no   grit@43.229.132.128 git -C /home/grit/cryptoplat/portal-service pull;"
                 }       
             }
             }
