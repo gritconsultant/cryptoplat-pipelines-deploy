@@ -6,49 +6,41 @@ def remote = [:]
 pipeline {
     agent any
      parameters {
-        string(name: 'HOST', defaultValue: '', description: 'Enter ip of host')
-        string(name: 'AIRFLOW_HOST', defaultValue: '', description: '')
-        string(name: 'USER', defaultValue: '', description: 'Enter user of host')
-        string(name: 'MACHINE_ID', defaultValue: '', description: 'Enter Machine id')
-        choice(name: 'ENV', choices: ['DEV', 'UAT', 'PROD'], description: 'Pick Env')
     }
     stages {
         stage('Get env') {
             steps {
-                    sh "echo >> resources/.env"
-                    sh "echo ENV=${params.ENV} >> resources/.env"
-                    sh "echo AIRFLOW_HOST=${params.AIRFLOW_HOST} >> resources/.env"
-                    sh "echo MACHINE_ID=${params.MACHINE_ID} >> resources/.env"
+                sh 'echo "hello world"'
             }
         }
-        stage('Prepare Resource To Host') {
-                steps {
-                script {
-                    sshagent(['easyrice-ai-prod']) {
-                        sh "ssh  -o StrictHostKeyChecking=no   ${params.USER}@${params.HOST} rm -rf deploy"
-                        sh "ssh  -o StrictHostKeyChecking=no   ${params.USER}@${params.HOST} mkdir deploy"
-                        sh "scp resources/.env ${params.USER}@${params.HOST}:deploy/.env"
-                        sh "scp -r resources  ${params.USER}@${params.HOST}:deploy/resources"
-                }       
-                }
-            }
-        }
-        stage('Update worker image') {
-                    steps {
-                    script {
-                        sshagent(['easyrice-ai-prod']) {
-                            sh "ssh  -o StrictHostKeyChecking=no   ${params.USER}@${params.HOST} docker-compose -f deploy/resources/docker-compose-worker.yml --env-file deploy/.env pull" }       
-                    }
-                }
-        }
-        stage('Deploy Worker') {
-                steps {
-                script {
-                    sshagent(['easyrice-ai-prod']) {
-                        sh "ssh  -o StrictHostKeyChecking=no  ${params.USER}@${params.HOST} docker-compose -f deploy/resources/docker-compose-worker.yml --env-file deploy/.env up -d"
-                }       
-                }
-            }
-    }
+    //     stage('Prepare Resource To Host') {
+    //             steps {
+    //             script {
+    //                 sshagent(['easyrice-ai-prod']) {
+    //                     sh "ssh  -o StrictHostKeyChecking=no   ${params.USER}@${params.HOST} rm -rf deploy"
+    //                     sh "ssh  -o StrictHostKeyChecking=no   ${params.USER}@${params.HOST} mkdir deploy"
+    //                     sh "scp resources/.env ${params.USER}@${params.HOST}:deploy/.env"
+    //                     sh "scp -r resources  ${params.USER}@${params.HOST}:deploy/resources"
+    //             }       
+    //             }
+    //         }
+    //     }
+    //     stage('Update worker image') {
+    //                 steps {
+    //                 script {
+    //                     sshagent(['easyrice-ai-prod']) {
+    //                         sh "ssh  -o StrictHostKeyChecking=no   ${params.USER}@${params.HOST} docker-compose -f deploy/resources/docker-compose-worker.yml --env-file deploy/.env pull" }       
+    //                 }
+    //             }
+    //     }
+    //     stage('Deploy Worker') {
+    //             steps {
+    //             script {
+    //                 sshagent(['easyrice-ai-prod']) {
+    //                     sh "ssh  -o StrictHostKeyChecking=no  ${params.USER}@${params.HOST} docker-compose -f deploy/resources/docker-compose-worker.yml --env-file deploy/.env up -d"
+    //             }       
+    //             }
+    //         }
+    // }
     }
 }
