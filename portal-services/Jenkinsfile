@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     sshagent(['grit-ssh-uat']) {
-                        sh "ssh  -o StrictHostKeyChecking=no   grit@43.229.132.128 docker-compose -f  /home/grit/cryptoplat/docker-compose.yml up -d --build portal-service;"
+                        sh "ssh  -o StrictHostKeyChecking=no   grit@43.229.132.128 docker-compose -f  /home/grit/cryptoplat/docker-compose.yaml up -d --build portal-service;"
                 }       
             }
             }
