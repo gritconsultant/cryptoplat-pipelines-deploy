@@ -16,34 +16,14 @@ pipeline {
             }
             }
         }
-    //     stage('Prepare Resource To Host') {
-    //             steps {
-    //             script {
-    //                 sshagent(['easyrice-ai-prod']) {
-    //                     sh "ssh  -o StrictHostKeyChecking=no   ${params.USER}@${params.HOST} rm -rf deploy"
-    //                     sh "ssh  -o StrictHostKeyChecking=no   ${params.USER}@${params.HOST} mkdir deploy"
-    //                     sh "scp resources/.env ${params.USER}@${params.HOST}:deploy/.env"
-    //                     sh "scp -r resources  ${params.USER}@${params.HOST}:deploy/resources"
-    //             }       
-    //             }
-    //         }
-    //     }
-    //     stage('Update worker image') {
-    //                 steps {
-    //                 script {
-    //                     sshagent(['easyrice-ai-prod']) {
-    //                         sh "ssh  -o StrictHostKeyChecking=no   ${params.USER}@${params.HOST} docker-compose -f deploy/resources/docker-compose-worker.yml --env-file deploy/.env pull" }       
-    //                 }
-    //             }
-    //     }
-    //     stage('Deploy Worker') {
-    //             steps {
-    //             script {
-    //                 sshagent(['easyrice-ai-prod']) {
-    //                     sh "ssh  -o StrictHostKeyChecking=no  ${params.USER}@${params.HOST} docker-compose -f deploy/resources/docker-compose-worker.yml --env-file deploy/.env up -d"
-    //             }       
-    //             }
-    //         }
-    // }
+        stage('Docker Deploy') {
+            steps {
+                script {
+                    sshagent(['grit-ssh-uat']) {
+                        sh "ssh  -o StrictHostKeyChecking=no   grit@43.229.132.128 docker-compose -f  /home/grit/cryptoplat/docker-compose up -d --build portal-service;"
+                }       
+            }
+            }
+        }
     }
 }
