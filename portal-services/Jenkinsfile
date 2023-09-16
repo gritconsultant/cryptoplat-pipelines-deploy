@@ -22,8 +22,12 @@ pipeline {
                     sshagent(['grit-ssh-uat']) {
                         sh "ssh  -o StrictHostKeyChecking=no   grit@43.229.132.128 docker-compose -f  /home/grit/cryptoplat/docker-compose.yaml up -d --build portal-service;"
                 }
-                discordSend description: '', footer: '', image: '', link: '', result: '', scmWebUrl: '', thumbnail: '', title: 'Portal Service', webhookURL: 'https://discord.com/api/webhooks/1136508571866120222/EUdDm1kO8K328MSkWzxLjJyt6HjrZhsYtHUVy-Knq-O4PVdUliwR-ICspE8nax_vZerD' 
             }
+            }
+        }
+        stage('Send Noti') {
+            steps {
+                discordSend description: '', footer: '', image: '', link: '', result: 'SUCCESS', scmWebUrl: '', thumbnail: '', title: 'Portal Service', webhookURL: 'https://discord.com/api/webhooks/1136508571866120222/EUdDm1kO8K328MSkWzxLjJyt6HjrZhsYtHUVy-Knq-O4PVdUliwR-ICspE8nax_vZerD' 
             }
         }
     }
