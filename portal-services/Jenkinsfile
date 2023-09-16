@@ -1,7 +1,3 @@
-String workerDir = 'inference-api'
-String credentialsId = 'deploy-key-github'
-def remote = [:]
-
 pipeline {
     agent any
     //  parameters {
