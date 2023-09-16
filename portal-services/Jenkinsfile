@@ -10,7 +10,7 @@ pipeline {
         stage('Update Source Code') {
             steps {
                 script {
-                    sshaent(['grit-ssh-uat']) {
+                    sshagent(['grit-ssh-uat']) {
                         sh "ssh  -o StrictHostKeyChecking=no   grit@43.229.132.128 git -C /home/grit/cryproplat/portal-service pull;"
                 }       
             }
